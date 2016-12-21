@@ -21,8 +21,9 @@ public class complex
 	{
 		real = a;
 		imag = b;
-		radius = Math.sqrt(a*a+b*b);
-		phi = Math.atan(b/a);
+		//radius = Math.sqrt(a*a+b*b);
+		//phi = Math.atan(b/a);
+		check();
 	}
 	public complex()
 	{
@@ -36,8 +37,9 @@ public class complex
 	{
 		real = a;
 		imag = b;
-		radius = Math.sqrt(a*a+b*b);
-		phi = Math.atan(b/a);
+		//radius = Math.sqrt(a*a+b*b);
+		//phi = Math.atan(b/a);
+		check();
 	}
 	public void setrp(double r, double p)
 	{
@@ -45,23 +47,33 @@ public class complex
 		phi = p;
 		real = r*Math.cos(phi);
 		imag = r*Math.sin(phi);
-		while(phi>Math.PI*2)
+		check();
+	}
+	
+	private void check()
+	{
+		final double almost_zero = 1e-10;
+			real = 0;
+		if(imag>-almost_zero&&imag<almost_zero)
+			imag = 0;
+		radius = Math.sqrt(real*real+imag*imag);
+		phi = Math.atan(imag/real);
+		while(phi>=Math.PI*2)
 			phi -= Math.PI*2;
 		while(phi<0)
 			phi += Math.PI*2;
 	}
 	
-	
 	public String toString()
 	{
-		if(imag>0)
+		if(imag>=0)
 			return ""+real+"\t+"+imag+"i";
 		else
 			return ""+real+"\t"+imag+"i";
 	}
 	public String toString2()
 	{
-		return ""+radius+"¡Ï"+(phi/2.0/Math.PI*360)+"¡ã";
+		return ""+radius+"ï¿½ï¿½"+(phi/2.0/Math.PI*360)+"ï¿½ï¿½";
 	}
 	public boolean equals(complex z)
 	{
@@ -111,7 +123,7 @@ public class complex
 		double tmp = Math.exp(z.real);
 		return new complex(tmp*Math.cos(z.imag),tmp*Math.sin(z.imag));
 	}
-	public static complex exp(double x)
+	public static complex expi(double x)
 	{
 		return new complex(Math.cos(x),Math.sin(x));
 	}
